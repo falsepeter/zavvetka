@@ -2,3 +2,7 @@ node_modules/
 .wrangler/
 .dev.vars
 dist/
+landing-pages/package-lock.json
+landing-pages/.vite-dev.err.log
+.gitignore
+landing-pages/.vite-dev.log
