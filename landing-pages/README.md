@@ -16,6 +16,14 @@
   - `src/components/ui/separator.tsx`
 - Готовая конфигурация Cloudflare Pages:
   - `wrangler.toml` с `pages_build_output_dir = "./dist"`
+- Бренд-ассеты в `public/`:
+  - `zavvetka_logo.svg`
+  - `zavvetka_logo_512.png`
+  - `zavvetka_favicon.ico`
+- Цветовая палитра:
+  - `Background`: `#0D1117`
+  - `Primary 1`: `#22D3EE`
+  - `Primary 2`: `#2563EB`
 
 ## Запуск локально
 

@@ -1,5 +1,9 @@
 # ZaVVetka
 
+<p align="center">
+  <img src="assets/branding/zavvetka_logo_512.png" alt="ZaVVetka logo" width="160" />
+</p>
+
 Телеграм-бот + Cloudflare Worker для зашифрованных заметок.
 
 Ключ шифрования хранится только в `hash` части ссылки (`#...`) и не попадает на сервер. Сервер хранит в Cloudflare KV только шифртекст и метаданные заметки.

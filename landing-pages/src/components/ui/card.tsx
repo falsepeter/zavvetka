@@ -2,6 +2,10 @@ import type { JSX } from "preact";
 import { cn } from "@/lib/utils";
 
 type CardProps = JSX.HTMLAttributes<HTMLElement>;
+type CardHeaderProps = JSX.HTMLAttributes<HTMLElement>;
+type CardTitleProps = JSX.HTMLAttributes<HTMLHeadingElement>;
+type CardDescriptionProps = JSX.HTMLAttributes<HTMLParagraphElement>;
+type CardContentProps = JSX.HTMLAttributes<HTMLDivElement>;
 
 export function Card({ class: className, children, ...props }: CardProps) {
   return (
@@ -17,7 +21,7 @@ export function Card({ class: className, children, ...props }: CardProps) {
   );
 }
 
-export function CardHeader({ class: className, children, ...props }: CardProps) {
+export function CardHeader({ class: className, children, ...props }: CardHeaderProps) {
   return (
     <header {...props} class={cn("p-6 pb-2", className)}>
       {children}
@@ -25,7 +29,7 @@ export function CardHeader({ class: className, children, ...props }: CardProps) 
   );
 }
 
-export function CardTitle({ class: className, children, ...props }: CardProps) {
+export function CardTitle({ class: className, children, ...props }: CardTitleProps) {
   return (
     <h3 {...props} class={cn("font-display text-lg font-semibold tracking-tight", className)}>
       {children}
@@ -33,7 +37,11 @@ export function CardTitle({ class: className, children, ...props }: CardProps) {
   );
 }
 
-export function CardDescription({ class: className, children, ...props }: CardProps) {
+export function CardDescription({
+  class: className,
+  children,
+  ...props
+}: CardDescriptionProps) {
   return (
     <p {...props} class={cn("mt-2 text-sm text-muted-foreground", className)}>
       {children}
@@ -41,7 +49,7 @@ export function CardDescription({ class: className, children, ...props }: CardPr
   );
 }
 
-export function CardContent({ class: className, children, ...props }: CardProps) {
+export function CardContent({ class: className, children, ...props }: CardContentProps) {
   return (
     <div {...props} class={cn("p-6 pt-2", className)}>
       {children}

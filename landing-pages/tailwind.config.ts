@@ -51,7 +51,7 @@ const config: Config = {
         "fade-up": "fade-up 700ms ease-out both",
       },
       boxShadow: {
-        glass: "0 30px 80px rgba(6, 78, 59, 0.16)",
+        glass: "0 28px 84px rgba(37, 99, 235, 0.2)",
       },
     },
   },

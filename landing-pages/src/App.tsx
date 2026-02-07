@@ -49,9 +49,22 @@ const flow = [
 export default function App() {
   return (
     <div class="relative min-h-screen overflow-x-hidden bg-background text-foreground">
-      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_6%,rgba(14,116,144,0.2),transparent_38%),radial-gradient(circle_at_88%_12%,rgba(249,115,22,0.22),transparent_35%),linear-gradient(180deg,rgba(240,249,255,0.95),rgba(255,251,235,1))]" />
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_8%,rgba(34,211,238,0.24),transparent_36%),radial-gradient(circle_at_86%_12%,rgba(37,99,235,0.3),transparent_34%),linear-gradient(180deg,#0D1117,#0B1020)]" />
       <main class="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-10 md:px-10 md:py-14">
-        <section class="animate-fade-up rounded-3xl border border-border/60 bg-card/85 p-7 shadow-glass backdrop-blur-sm md:p-10">
+        <section class="animate-fade-up rounded-3xl border border-border/70 bg-card/80 p-7 shadow-glass backdrop-blur-sm md:p-10">
+          <div class="mb-6 inline-flex items-center gap-4 rounded-2xl border border-border/70 bg-background/50 px-4 py-3">
+            <img
+              src="/zavvetka_logo.svg"
+              alt="ZaVVetka logo"
+              width="56"
+              height="56"
+              class="h-14 w-14 rounded-xl ring-1 ring-border/60"
+            />
+            <div>
+              <p class="font-display text-lg tracking-tight">ZaVVetka</p>
+              <p class="text-sm text-muted-foreground">Приватные заметки из Telegram</p>
+            </div>
+          </div>
           <div class="flex flex-wrap items-center gap-3">
             <Badge>Telegram + Cloudflare</Badge>
             <Badge variant="outline">Preact + shadcn-ui</Badge>

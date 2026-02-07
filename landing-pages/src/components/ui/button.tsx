@@ -8,11 +8,11 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_10px_26px_rgba(2,132,199,0.26)]",
+          "bg-[linear-gradient(135deg,#22D3EE,#2563EB)] text-white hover:brightness-110 shadow-[0_12px_28px_rgba(37,99,235,0.34)]",
         outline:
           "border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/85",
         ghost: "text-foreground hover:bg-accent hover:text-accent-foreground",
       },
       size: {

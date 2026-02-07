@@ -1,0 +1,22 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="zavvetkaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="52" fill="#0D1117" />
+  <path
+    d="
+      M64 76
+      L176 76
+      L120 128
+      L200 128
+      L200 180
+      L80 180
+      L136 128
+      L64 128
+      Z"
+    fill="url(#zavvetkaGrad)"
+  />
+</svg>
