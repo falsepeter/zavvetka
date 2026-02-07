@@ -2,6 +2,13 @@
 
 Отдельный лендинг на `Preact` с UI-компонентами в стиле `shadcn-ui`, Tailwind и сборкой через Vite.
 
+## Ссылки проекта
+
+- Сайт: `https://zavvetka.ru`
+- Telegram бот: `@zavvetka_bot`
+- Web-ссылка на бота: `https://t.me/zavvetka_bot`
+- GitHub: `https://github.com/falsepeter/zavvetka.git`
+
 ## Что внутри
 
 - Современный лендинг с секциями:

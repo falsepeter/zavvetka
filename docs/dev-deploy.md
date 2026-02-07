@@ -6,6 +6,9 @@
 - Аккаунт Cloudflare.
 - Созданный Telegram бот и токен (`TELEGRAM_BOT_TOKEN`).
 - Установленный `wrangler` (через `npm install` в проекте).
+- Рабочие ссылки проекта:
+  - сайт `https://zavvetka.ru`
+  - бот `@zavvetka_bot` (`https://t.me/zavvetka_bot`)
 
 ## 2. Установка зависимостей
 

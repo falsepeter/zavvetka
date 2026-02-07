@@ -8,6 +8,13 @@
 
 Ключ шифрования хранится только в `hash` части ссылки (`#...`) и не попадает на сервер. Сервер хранит в Cloudflare KV только шифртекст и метаданные заметки.
 
+## Ссылки проекта
+
+- Сайт: `https://zavvetka.ru`
+- Telegram бот: `@zavvetka_bot`
+- Web-ссылка на бота: `https://t.me/zavvetka_bot`
+- GitHub: `https://github.com/falsepeter/zavvetka.git`
+
 ## Что реализовано
 
 - Кнопка Telegram `Создать заметку` (`/start` + reply keyboard).

@@ -15,11 +15,15 @@ import {
   Cloud,
   LockKeyhole,
   MessageSquareDot,
+  Send,
   ShieldCheck,
   Sparkles,
 } from "lucide-preact";
 
 const GITHUB_URL = "https://github.com/falsepeter/zavvetka.git";
+const SITE_URL = "https://zavvetka.ru";
+const BOT_WEB_URL = "https://t.me/zavvetka_bot";
+const BOT_USERNAME = "@zavvetka_bot";
 
 const trustCards = [
   {
@@ -51,33 +55,50 @@ export default function App() {
     <div class="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_8%,rgba(34,211,238,0.24),transparent_36%),radial-gradient(circle_at_86%_12%,rgba(37,99,235,0.3),transparent_34%),linear-gradient(180deg,#0D1117,#0B1020)]" />
       <main class="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-10 md:px-10 md:py-14">
-        <section class="animate-fade-up rounded-3xl border border-border/70 bg-card/80 p-7 shadow-glass backdrop-blur-sm md:p-10">
-          <div class="mb-6 inline-flex items-center gap-4 rounded-2xl border border-border/70 bg-background/50 px-4 py-3">
-            <img
-              src="/zavvetka_logo.svg"
-              alt="ZaVVetka logo"
-              width="56"
-              height="56"
-              class="h-14 w-14 rounded-xl ring-1 ring-border/60"
-            />
-            <div>
-              <p class="font-display text-lg tracking-tight">ZaVVetka</p>
-              <p class="text-sm text-muted-foreground">Приватные заметки из Telegram</p>
+        <section class="">
+
+          <div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border/70 bg-background/50 px-4 py-3">
+            <div class="inline-flex items-center gap-4">
+              <img
+                src="/zavvetka_logo.svg"
+                alt="ZaVVetka logo"
+                width="56"
+                height="56"
+                class="h-14 w-14 rounded-xl ring-1 ring-border/60"
+              />
+              <div>
+                <p class="font-display text-lg tracking-tight">ZaVVetka</p>
+                {/* <p class="text-sm text-muted-foreground">Приватные заметки в Telegram</p> */}
+              </div>
             </div>
+            <a
+              href={BOT_WEB_URL}
+              target="_blank"
+              rel="noreferrer"
+              class={cn(buttonVariants({ size: "sm" }), "min-w-44")}
+            >
+              <Send class="h-4 w-4" />
+              <span>Открыть бота</span>
+            </a>
           </div>
-          <div class="flex flex-wrap items-center gap-3">
-            <Badge>Telegram + Cloudflare</Badge>
-            <Badge variant="outline">Preact + shadcn-ui</Badge>
+        </section>
+        <section class="animate-fade-up rounded-3xl border border-border/70 bg-card/80 p-7 shadow-glass backdrop-blur-sm md:p-10">
+          <h1 class="max-w-4xl font-display text-4xl leading-tight tracking-tight md:text-4xl">Приватные заметки, где серверу <span class="bg-[linear-gradient(135deg,#22D3EE,#2563EB)] bg-clip-text text-transparent">нечего читать</span></h1>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <Badge variant="outline">100% Opensource проект</Badge>
+            <Badge variant="outline">+ инструкция по запуску на своем сервере</Badge>
           </div>
-          <h1 class="mt-6 max-w-4xl font-display text-4xl leading-tight tracking-tight md:text-6xl">
-            ZaVVetka: приватные заметки из Telegram, которые сервер не может прочитать
-          </h1>
-          <p class="mt-5 max-w-3xl text-base text-muted-foreground md:text-lg">
-            Проект делает одно важное обещание: содержимое заметки остается вашим. Ключ
-            шифрования хранится только у пользователя, а Cloudflare Worker работает с
-            зашифрованным payload.
+          <p class="mt-3 max-w-3xl text-base text-muted-foreground md:text-lg">
+            Содержимое заметки остается только Вашим и только Вашим.
           </p>
-          <div class="mt-8 flex flex-wrap items-center gap-3">
+          <p class=" max-w-3xl text-base text-muted-foreground md:text-lg">
+            
+            Ключ шифрования хранится только у пользователя.
+          </p>
+          <p class=" max-w-3xl text-base text-muted-foreground md:text-lg">
+            Сервер работает только с зашифрованными данными.
+          </p>
+          {/* <div class="mt-8 flex flex-wrap items-center gap-3">
             <a
               href={GITHUB_URL}
               target="_blank"
@@ -87,10 +108,16 @@ export default function App() {
               <span>GitHub проекта</span>
               <ArrowUpRight class="h-4 w-4" />
             </a>
-            <a href="#trust" class={buttonVariants({ size: "lg", variant: "outline" })}>
-              <span>Почему можно доверять</span>
+            <a
+              href={BOT_WEB_URL}
+              target="_blank"
+              rel="noreferrer"
+              class={buttonVariants({ size: "lg", variant: "outline" })}
+            >
+              <Send class="h-4 w-4" />
+              <span>{BOT_USERNAME}</span>
             </a>
-          </div>
+          </div> */}
         </section>
 
         <section id="trust" class="space-y-6">
@@ -119,7 +146,7 @@ export default function App() {
             ))}
           </div>
         </section>
-
+{/* 
         <section class="animate-fade-up [animation-delay:460ms] rounded-2xl border border-border/70 bg-card/90 p-6 md:p-8">
           <div class="flex items-center gap-3">
             <Sparkles class="h-5 w-5 text-primary" />
@@ -136,7 +163,7 @@ export default function App() {
               </li>
             ))}
           </ol>
-        </section>
+        </section> */}
 
         <section class="animate-fade-up [animation-delay:620ms] rounded-2xl border border-border/60 bg-card/90 p-6 md:p-8">
           <div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
@@ -172,12 +199,12 @@ export default function App() {
                 <ArrowUpRight class="h-4 w-4" />
               </a>
               <a
-                href="https://zavvetka.ru"
+                href={SITE_URL}
                 target="_blank"
                 rel="noreferrer"
                 class={cn(buttonVariants({ variant: "secondary", size: "lg" }), "w-full")}
               >
-                <span>Открыть проект</span>
+                <span>Официальный сайт разработчика</span>
                 <MessageSquareDot class="h-4 w-4" />
               </a>
             </div>
