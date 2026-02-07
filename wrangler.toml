@@ -1,0 +1,10 @@
+name = "zavvetka"
+main = "src/index.ts"
+compatibility_date = "2026-02-07"
+
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "NOTES_KV"
+id = "replace-with-your-kv-namespace-id"
+preview_id = "replace-with-your-kv-preview-id"
