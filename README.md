@@ -116,6 +116,7 @@ https://zavvetka.ru/07924a52-11f6-4f81-bcd1-09f795411f41#c22a92514ec06c94f696a73
 Подробная пошаговая инструкция:
 
 - `docs/dev-deploy.md`
+- `landing-pages/README.md` (отдельный лендинг на Preact для Cloudflare Pages)
 
 ## Быстрые команды
 
