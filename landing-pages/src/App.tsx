@@ -83,7 +83,10 @@ export default function App() {
           </div>
         </section>
         <section class="animate-fade-up rounded-3xl border border-border/70 bg-card/80 p-7 shadow-glass backdrop-blur-sm md:p-10">
-          <h1 class="max-w-4xl font-display text-4xl leading-tight tracking-tight md:text-4xl">Приватные заметки, где серверу <span class="bg-[linear-gradient(135deg,#22D3EE,#2563EB)] bg-clip-text text-transparent">нечего читать</span></h1>
+          <h1 class="max-w-4xl font-display text-4xl leading-tight tracking-tight md:text-4xl">Зашифрованные 
+            <span class="mx-3 bg-[linear-gradient(135deg,#22D3EE,#2563EB)] bg-clip-text text-transparent">end-to-end</span> 
+            заметки 
+          </h1>
           <div class="mt-5 flex flex-wrap items-center gap-3">
             <Badge variant="outline">100% Opensource проект</Badge>
             <Badge variant="outline">+ инструкция по запуску на своем сервере</Badge>
@@ -136,8 +139,10 @@ export default function App() {
                 key={title}
               >
                 <CardHeader>
-                  <Icon class="mb-3 h-6 w-6 text-primary" />
-                  <CardTitle>{title}</CardTitle>
+                  <div class="flex items-center gap-2">
+                    <Icon class="h-5 w-5 shrink-0 text-primary" />
+                    <CardTitle class="whitespace-nowrap text-lg">{title}</CardTitle>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>{text}</CardDescription>
