@@ -1,0 +1,78 @@
+<svg width="1200" height="300" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="zavvetkaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="300" fill="#0B1D2A"/>
+
+  <!-- blueprint grid -->
+  <g stroke="#1E3A5F" stroke-width="1" opacity="0.5">
+    <!-- vertical -->
+    <line x1="100" y1="0" x2="100" y2="300"/>
+    <line x1="200" y1="0" x2="200" y2="300"/>
+    <line x1="300" y1="0" x2="300" y2="300"/>
+    <line x1="400" y1="0" x2="400" y2="300"/>
+    <line x1="500" y1="0" x2="500" y2="300"/>
+    <line x1="600" y1="0" x2="600" y2="300"/>
+    <line x1="700" y1="0" x2="700" y2="300"/>
+    <line x1="800" y1="0" x2="800" y2="300"/>
+    <line x1="900" y1="0" x2="900" y2="300"/>
+    <line x1="1000" y1="0" x2="1000" y2="300"/>
+    <line x1="1100" y1="0" x2="1100" y2="300"/>
+
+    <!-- horizontal -->
+    <line x1="0" y1="60" x2="1200" y2="60"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="240" x2="1200" y2="240"/>
+  </g>
+
+  <!-- ribbon logo -->
+  <g transform="translate(120,60) scale(0.85)">
+    <rect width="256" height="256" rx="52" fill="#0D1117"/>
+
+    <path
+      d="
+        M64 76
+        L176 76
+        L120 128
+        L200 128
+        L200 180
+        L80 180
+        L136 128
+        L64 128
+        Z"
+      fill="url(#zavvetkaGrad)"
+    />
+  </g>
+
+  <!-- Title -->
+  <text
+    x="380"
+    y="165"
+    fill="#E0F2FE"
+    font-size="92"
+    font-family="monospace"
+    letter-spacing="6"
+  >
+    ZaVVetka
+  </text>
+
+  <!-- Russian subtitle -->
+  <text
+    x="385"
+    y="210"
+    fill="#7DD3FC"
+    font-size="26"
+    font-family="monospace"
+    opacity="0.85"
+  >
+    зашифрованные одноразовые заметки
+  </text>
+
+</svg>
