@@ -1,3 +1,5 @@
+export type NotePageMode = "view" | "edit";
+
 export function renderLandingPage(): string {
   return `<!doctype html>
 <html lang="ru">
@@ -35,20 +37,25 @@ export function renderLandingPage(): string {
   <body>
     <main>
       <h1>ZaVVetka</h1>
-      <p>Откройте ссылку из Telegram в формате <code>/UUID#md5</code>, чтобы расшифровать и редактировать заметку.</p>
+      <p>Откройте ссылку из Telegram в формате <code>/view/UUID#md5</code> для просмотра или <code>/edit/UUID?access=...#md5</code> для редактирования.</p>
     </main>
   </body>
 </html>`;
 }
 
-export function renderNotePage(uuid: string): string {
+export function renderNotePage(uuid: string, mode: NotePageMode): string {
   const safeUuid = escapeHtml(uuid);
+  const isEditMode = mode === "edit";
+  const pageTitle = isEditMode ? "Редактор заметки" : "Просмотр заметки";
+  const modeLabel = isEditMode ? "Режим: редактирование" : "Режим: просмотр";
+  const placeholder = isEditMode ? "Введите текст заметки..." : "Режим просмотра";
+
   return `<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Редактор заметки</title>
+    <title>${escapeHtml(pageTitle)}</title>
     <style>
       :root {
         color-scheme: light;
@@ -155,8 +162,8 @@ export function renderNotePage(uuid: string): string {
   <body>
     <main>
       <section class="panel">
-        <h1>Редактор заметки</h1>
-        <p id="meta" class="meta">UUID: ${safeUuid}</p>
+        <h1>${escapeHtml(pageTitle)}</h1>
+        <p id="meta" class="meta">UUID: ${safeUuid}. ${escapeHtml(modeLabel)}</p>
 
         <div class="chips">
           <span id="autoDelete" class="chip">Автоудаление: загрузка...</span>
@@ -164,7 +171,7 @@ export function renderNotePage(uuid: string): string {
         </div>
 
         <label for="editor">Текст заметки</label>
-        <textarea id="editor" placeholder="Введите текст заметки..."></textarea>
+        <textarea id="editor" placeholder="${escapeHtml(placeholder)}"></textarea>
 
         <div class="line">
           <span id="saveState" class="warn">Ожидание загрузки...</span>
@@ -181,7 +188,10 @@ export function renderNotePage(uuid: string): string {
 
     <script>
       const NOTE_UUID = ${JSON.stringify(uuid)};
-      const API_URL = "/api/notes/" + NOTE_UUID;
+      const NOTE_MODE = ${JSON.stringify(mode)};
+      const IS_EDIT_MODE = NOTE_MODE === "edit";
+      const ACCESS_TOKEN = new URLSearchParams(window.location.search).get("access") || "";
+      const API_URL = "/api/notes/" + NOTE_UUID + (IS_EDIT_MODE ? "?access=" + encodeURIComponent(ACCESS_TOKEN) : "");
       const SAVE_DELAY_MS = 30000;
       const LABELS = {
         off: "Без автоудаления",
@@ -223,6 +233,13 @@ export function renderNotePage(uuid: string): string {
             return;
           }
 
+          if (IS_EDIT_MODE && !/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9]{16,128}$/.test(ACCESS_TOKEN)) {
+            setReadonly("Параметр access отсутствует или некорректен.");
+            setStatus("Нет доступа к редактированию.", "err");
+            showError("Откройте корректную ссылку редактирования с параметром access.");
+            return;
+          }
+
           aesKey = await deriveKey(keyHash);
           bindEvents();
           await loadNote();
@@ -235,6 +252,11 @@ export function renderNotePage(uuid: string): string {
       }
 
       function bindEvents() {
+        ui.deleteBtn.hidden = !IS_EDIT_MODE;
+        if (!IS_EDIT_MODE) {
+          return;
+        }
+
         ui.editor.addEventListener("input", () => {
           dirty = true;
           setStatus("Изменения не сохранены.", "warn");
@@ -295,6 +317,11 @@ export function renderNotePage(uuid: string): string {
         }
 
         dirty = false;
+        if (!IS_EDIT_MODE) {
+          setReadonly("Режим просмотра: редактирование отключено.");
+          setStatus("Режим просмотра.", "ok");
+          return;
+        }
         setStatus("Готово к редактированию.", "ok");
       }
 
@@ -308,7 +335,7 @@ export function renderNotePage(uuid: string): string {
       }
 
       async function save() {
-        if (!dirty) {
+        if (!IS_EDIT_MODE || !dirty) {
           return;
         }
         if (saveInFlight) {
@@ -329,6 +356,12 @@ export function renderNotePage(uuid: string): string {
             headers: { "content-type": "application/json; charset=utf-8" },
             body: JSON.stringify(encrypted)
           });
+          if (response.status === 403) {
+            setReadonly("Ссылка редактирования недействительна.");
+            setStatus("Нет доступа к редактированию.", "err");
+            showError("Параметр access не прошел проверку.");
+            return;
+          }
           if (response.status === 404) {
             setReadonly("Заметка удалена и больше не редактируется.");
             setStatus("Сохранение невозможно.", "err");
@@ -359,7 +392,16 @@ export function renderNotePage(uuid: string): string {
       }
 
       async function removeNote() {
+        if (!IS_EDIT_MODE) {
+          return;
+        }
         const response = await fetch(API_URL, { method: "DELETE" });
+        if (response.status === 403) {
+          setReadonly("Ссылка редактирования недействительна.");
+          setStatus("Нет доступа к удалению.", "err");
+          showError("Параметр access не прошел проверку.");
+          return;
+        }
         if (!response.ok && response.status !== 404) {
           throw new Error("Не удалось удалить заметку.");
         }
@@ -477,6 +519,51 @@ export function renderNotePage(uuid: string): string {
         return m + "м " + String(s).padStart(2, "0") + "с";
       }
     </script>
+  </body>
+</html>`;
+}
+
+export function renderAccessDeniedPage(uuid: string): string {
+  const safeUuid = escapeHtml(uuid);
+  return `<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Доступ запрещен</title>
+    <style>
+      :root { color-scheme: light; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 10% 5%, #fef3c7, transparent 35%),
+          radial-gradient(circle at 100% 10%, #bfdbfe, transparent 30%),
+          linear-gradient(130deg, #fffbeb, #ecfeff);
+        color: #0f172a;
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+      main {
+        width: min(760px, calc(100vw - 24px));
+        background: #ffffffd6;
+        border: 1px solid #bfdbfe;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+      }
+      h1 { margin: 0 0 10px; font-size: 1.7rem; }
+      p { margin: 0; line-height: 1.5; color: #334155; word-break: break-word; }
+      code { background: #e0f2fe; border-radius: 6px; padding: 2px 6px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Доступ к редактированию запрещен</h1>
+      <p>Проверьте, что вы открыли корректную ссылку вида <code>/edit/UUID?access=...#md5</code>.</p>
+      <p>UUID заметки: <code>${safeUuid}</code></p>
+    </main>
   </body>
 </html>`;
 }
