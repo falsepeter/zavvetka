@@ -43,7 +43,7 @@ export function CardDescription({
   ...props
 }: CardDescriptionProps) {
   return (
-    <p {...props} class={cn("mt-2 text-sm text-muted-foreground", className)}>
+    <p {...props} class={cn("text-sm text-muted-foreground", className)}>
       {children}
     </p>
   );
