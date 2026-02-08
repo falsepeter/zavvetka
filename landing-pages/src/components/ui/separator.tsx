@@ -5,5 +5,7 @@ interface SeparatorProps {
 }
 
 export function Separator({ class: className }: SeparatorProps) {
-  return <div class={cn("h-px w-full bg-border/70", className)} role="separator" />;
+  return (
+    <div class={cn("h-px w-full bg-border/70", className)} role="separator" />
+  );
 }

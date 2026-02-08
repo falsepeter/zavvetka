@@ -21,7 +21,11 @@ export function Card({ class: className, children, ...props }: CardProps) {
   );
 }
 
-export function CardHeader({ class: className, children, ...props }: CardHeaderProps) {
+export function CardHeader({
+  class: className,
+  children,
+  ...props
+}: CardHeaderProps) {
   return (
     <header {...props} class={cn("p-6 pb-2", className)}>
       {children}
@@ -29,9 +33,16 @@ export function CardHeader({ class: className, children, ...props }: CardHeaderP
   );
 }
 
-export function CardTitle({ class: className, children, ...props }: CardTitleProps) {
+export function CardTitle({
+  class: className,
+  children,
+  ...props
+}: CardTitleProps) {
   return (
-    <h3 {...props} class={cn("font-display text-lg font-semibold tracking-tight", className)}>
+    <h3
+      {...props}
+      class={cn("font-display text-lg font-semibold tracking-tight", className)}
+    >
       {children}
     </h3>
   );
@@ -49,7 +60,11 @@ export function CardDescription({
   );
 }
 
-export function CardContent({ class: className, children, ...props }: CardContentProps) {
+export function CardContent({
+  class: className,
+  children,
+  ...props
+}: CardContentProps) {
   return (
     <div {...props} class={cn("p-6 pt-2", className)}>
       {children}

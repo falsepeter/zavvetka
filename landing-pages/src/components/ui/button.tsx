@@ -31,6 +31,16 @@ export const buttonVariants = cva(
 type ButtonProps = JSX.HTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants>;
 
-export function Button({ class: className, variant, size, ...props }: ButtonProps) {
-  return <button {...props} class={cn(buttonVariants({ variant, size }), className)} />;
+export function Button({
+  class: className,
+  variant,
+  size,
+  ...props
+}: ButtonProps) {
+  return (
+    <button
+      {...props}
+      class={cn(buttonVariants({ variant, size }), className)}
+    />
+  );
 }

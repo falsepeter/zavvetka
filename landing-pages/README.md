@@ -1,38 +1,30 @@
-# ZaVVetka Landing (Cloudflare Pages)
+# Cайт ZaVVetka.ru
 
-Отдельный лендинг на `Preact` с UI-компонентами в стиле `shadcn-ui`, Tailwind и сборкой через Vite.
+Лендинг на `Preact.js` с UI-компонентами в стиле `shadcn-ui` с прекомпилятором Tailwind и сборкой через Vite.
 
-## Ссылки проекта
+## Ссылки
 
 - Сайт: `https://zavvetka.ru`
-- Telegram бот: `@zavvetka_bot`
-- Web-ссылка на бота: `https://t.me/zavvetka_bot`
-- GitHub: `https://github.com/falsepeter/zavvetka.git`
+- Telegram bot: `@zavvetka_bot`
+- Ссылка на Telegram bot: `https://t.me/zavvetka_bot`
+- GitHub репозиторий: `https://github.com/falsepeter/zavvetka.git`
+- Написать разработчику: `https://t.me/truepeter`
 
-## Что внутри
+## Палитра цветов
 
-- Современный лендинг с секциями:
-  - описание проекта,
-  - почему ему можно доверять,
-  - как работает архитектура,
-  - CTA на GitHub.
-- Компоненты shadcn-style:
-  - `src/components/ui/button.tsx`
-  - `src/components/ui/card.tsx`
-  - `src/components/ui/badge.tsx`
-  - `src/components/ui/separator.tsx`
-- Готовая конфигурация Cloudflare Pages:
-  - `wrangler.toml` с `pages_build_output_dir = "./dist"`
-- Бренд-ассеты в `public/`:
-  - `zavvetka_logo.svg`
-  - `zavvetka_logo_512.png`
-  - `zavvetka_favicon.ico`
-- Цветовая палитра:
-  - `Background`: `#0D1117`
-  - `Primary 1`: `#22D3EE`
-  - `Primary 2`: `#2563EB`
+- Фоновый: `#0D1117`
+- Первичный: `#22D3EE`
+- Вторичный: `#2563EB`
 
-## Запуск локально
+## Структура
+
+- `wrangler.toml` — конфиг файл для Cloudflare Pages.
+- `src/App.tsx` — тексты, блоки, ссылки, CTA.
+- `src/index.css` — базовые стили, шрифты, палитра.
+- `src/components/` - компоненты
+- `public/` — логотипы и favicon.
+
+## Запуск локального режима
 
 ```bash
 cd landing-pages
@@ -40,14 +32,14 @@ npm install
 npm run dev
 ```
 
-## Production build
+## Сборка проекта (production build)
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Деплой на Cloudflare Pages
+## Размещение на Cloudflare Pages
 
 ```bash
 npm run deploy
@@ -60,10 +52,13 @@ npm run build
 npx wrangler pages deploy dist --project-name zavvetka-landing
 ```
 
-## GitHub ссылка
+### Настройки размещения
 
-В лендинге уже указана ссылка на текущий репозиторий:
+- `Root directory`: `landing-pages`
+- `Build command`: `npm run build`
+- `Build output directory`: `dist`
 
-```ts
-const GITHUB_URL = "https://github.com/falsepeter/zavvetka.git";
-```
+### Переменные окружения
+
+- Для работы лендинга не требуются.
+- Для деплоя через CI/неинтерактивный режим нужен `CLOUDFLARE_API_TOKEN`.

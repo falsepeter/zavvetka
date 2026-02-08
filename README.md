@@ -17,6 +17,7 @@
 
 ## Что реализовано
 
+- Лендинг для проекта на Preact (Cloudflare Pages). Подробнее в [landing-pages/README.md](landing-pages/README.md).
 - Кнопка Telegram `Создать заметку` (`/start` + reply keyboard).
 - Сообщение от бота:
   - `Заметка от DD.MM.YY HH:MM создана`.
