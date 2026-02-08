@@ -186,7 +186,7 @@ export default function App() {
               Есть инструкция по запуску своего сервера
             </Badge>
           </div> */}
-          <div class="mt-5 w-full max-w-sm animate-fade-up [animation-delay:460ms]">
+          <div class="mt-5 w-full animate-fade-up [animation-delay:460ms] lg:max-w-[21rem]">
             <div class="group/donate relative w-full">
               <a
                 href="https://zavvetka.ru/donate"
