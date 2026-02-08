@@ -16,7 +16,6 @@ ZaVVetka - Это OpenSource проект на github, а также однои�
   <img src="assets/readme_landing_2.jpg" alt="ZaVVetka logo" width="100%" />
 </p>
 
-- [Лендинг zavvetka](landing-pages/README.md).
 <!-- 
 <p align="center">
   <img src="assets/readme_telegram_bot.jpg" alt="ZaVVetka logo" width="100%" />
