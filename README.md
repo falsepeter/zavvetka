@@ -10,8 +10,7 @@ ZaVVetka - Это OpenSource проект на github, а также однои�
 ## Официальные ссылки проекта
 - Сайт: [zavvetka.ru](https://zavvetka.ru)
 - Telegram бот: [@zavvetka_bot](https://t.me/zavvetka_bot)
-- Web-ссылка на бота: [t.me/zavvetka_bot](https://t.me/zavvetka_bot)
-- GitHub: [falsepeter/zavvetka](https://github.com/falsepeter/zavvetka.git)
+- GitHub: [falsepeter/zavvetka](https://github.com/falsepeter/zavvetka)
 
 <p align="center">
   <img src="assets/readme_landing_2.jpg" alt="ZaVVetka logo" width="100%" />
