@@ -15,6 +15,7 @@ import {
   Cloud,
   Code,
   Github,
+  Heart,
   LockKeyhole,
   MessageSquareDot,
   Send,
@@ -70,7 +71,8 @@ export default function App() {
           >
             <div
               class="group relative flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-2xl rounded-b-none border border-border/70 bg-background/50 px-7 py-7 [--spotlight-x:50%] [--spotlight-y:50%]"
-              onMouseMove={(event) => {
+              onPointerMove={(event) => {
+                if (event.pointerType !== "mouse") return;
                 const target = event.currentTarget as HTMLDivElement;
                 const rect = target.getBoundingClientRect();
                 const x = event.clientX - rect.left;
@@ -78,7 +80,8 @@ export default function App() {
                 target.style.setProperty("--spotlight-x", `${x}px`);
                 target.style.setProperty("--spotlight-y", `${y}px`);
               }}
-              onMouseLeave={(event) => {
+              onPointerLeave={(event) => {
+                if (event.pointerType !== "mouse") return;
                 const target = event.currentTarget as HTMLDivElement;
                 target.style.setProperty("--spotlight-x", "50%");
                 target.style.setProperty("--spotlight-y", "50%");
@@ -96,7 +99,7 @@ export default function App() {
                   />
                   <div>
                     <p class="font-display text-lg tracking-tight">ZaVVetka</p>
-                    <p class="text-sm text-muted-foreground">
+                    <p class="hidden text-sm text-muted-foreground sm:block">
                       Секретные сообщения для telegram
                     </p>
                   </div>
@@ -104,7 +107,7 @@ export default function App() {
                 <span
                   class={cn(
                     buttonVariants({ variant: "outline", size: "sm" }),
-                    "min-w-44 h-11 px-5 border-[#30363d] bg-[#24292f] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] hover:border-[#6e7681] hover:bg-[#1f242a] hover:text-white group-hover/hero:bg-secondary group-hover/hero:text-secondary-foreground group-hover/hero:border-secondary/50",
+                    "h-11 w-full px-5 md:w-auto md:min-w-44 border-[#30363d] bg-[#24292f] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] hover:border-[#6e7681] hover:bg-[#1f242a] hover:text-white group-hover/hero:bg-secondary group-hover/hero:text-secondary-foreground group-hover/hero:border-secondary/50",
                   )}
                 >
                   <Send class="h-4 w-4" />
@@ -115,7 +118,7 @@ export default function App() {
           </a>
         </section>
 
-        <section class="rounded-3xl rounded-t-none border border-border/70 bg-card/80 p-7 shadow-glass backdrop-blur-sm md:p-10 mt-[calc(-2em-3px)]">
+        <section class="relative z-20 rounded-3xl rounded-t-none border border-border/70 bg-card/80 p-7 shadow-glass backdrop-blur-sm md:p-10 mt-[calc(-2em-3px)]">
           <h1 class="animate-fade-up max-w-4xl font-display text-4xl leading-tight tracking-tight md:text-4xl">
             Зашифрованные
             <span class="mx-3 bg-[linear-gradient(135deg,#22D3EE,#2563EB)] bg-clip-text text-transparent">
@@ -182,6 +185,30 @@ export default function App() {
             <Badge variant="outline">
               Есть инструкция по запуску своего сервера
             </Badge>
+          </div>
+          <div class="mt-5 w-full max-w-sm animate-fade-up [animation-delay:460ms]">
+            <div class="group/donate relative w-full">
+              <a
+                href="https://zavvetka.ru/donate"
+                target="_blank"
+                rel="noreferrer"
+                class={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "w-full border-red-500/40 bg-red-500/10 hover:border-red-500/70 hover:bg-red-500/20",
+                )}
+              >
+                <Heart class="h-4 w-4 fill-red-500 text-red-500" />
+                <span>Поддержать проект</span>
+              </a>
+              <div class="pointer-events-none absolute bottom-full left-0 z-[9999] mb-2 hidden w-full origin-bottom rounded-xl border border-border/70 bg-card/95 p-2 opacity-0 shadow-glass backdrop-blur-sm transition-all duration-300 translate-y-1 scale-95 [@media(hover:hover)_and_(pointer:fine)]:block group-hover/donate:translate-y-0 group-hover/donate:scale-100 group-hover/donate:opacity-100 group-focus-within/donate:translate-y-0 group-focus-within/donate:scale-100 group-focus-within/donate:opacity-100">
+                <img
+                  src="/assets/donation.svg"
+                  alt="QR-код для поддержки проекта"
+                  loading="lazy"
+                  class="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
