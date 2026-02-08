@@ -1,44 +1,42 @@
-# Запуск в Dev и Публикация в Cloudflare Workers
+# Запуск и деплой
 
-## 1. Требования
+Актуально на 8 февраля 2026 года.
+
+## 1. Сервисы в репозитории
+
+- Основной Worker (`/`) - `src/index.ts`, `src/note-page.ts`.
+- Лендинг Cloudflare Pages - `landing-pages/`.
+- Donations Worker - `donations-worker/`.
+
+## 2. Предварительные требования
 
 - Node.js 20+ и npm.
 - Аккаунт Cloudflare.
-- Созданный Telegram бот и токен (`TELEGRAM_BOT_TOKEN`).
-- Установленный `wrangler` (через `npm install` в проекте).
-- Рабочие ссылки проекта:
-  - сайт `https://zavvetka.ru`
-  - бот `@zavvetka_bot` (`https://t.me/zavvetka_bot`)
+- Telegram Bot Token и webhook secret для основного Worker.
+- `wrangler` устанавливается через `npm install` в каждом подпроекте.
 
-## 2. Установка зависимостей
+## 3. Основной Worker (`zavvetka`)
 
-В корне проекта:
+### 3.1 Установка зависимостей
 
 ```bash
 npm install
 ```
 
-## 3. Логин в Cloudflare
+### 3.2 Авторизация в Cloudflare
 
 ```bash
 npx wrangler login
 ```
 
-## 4. Создание KV namespace
-
-Прод:
+### 3.3 Создание KV namespace
 
 ```bash
 npx wrangler kv namespace create NOTES_KV
-```
-
-Preview (для `wrangler dev`):
-
-```bash
 npx wrangler kv namespace create NOTES_KV --preview
 ```
 
-Скопируйте `id` и `preview_id` и вставьте в `wrangler.toml`:
+Затем обновите `wrangler.toml`:
 
 ```toml
 [[kv_namespaces]]
@@ -47,17 +45,21 @@ id = "..."
 preview_id = "..."
 ```
 
-## 5. Настройка переменных окружения
+### 3.4 Настройка переменных окружения
 
-### Dev
+PowerShell:
 
-Скопируйте шаблон:
+```powershell
+Copy-Item .dev.vars.example .dev.vars
+```
+
+Linux/macOS:
 
 ```bash
 cp .dev.vars.example .dev.vars
 ```
 
-Заполните `.dev.vars`:
+Минимально необходимые переменные для dev:
 
 ```env
 TELEGRAM_BOT_TOKEN=...
@@ -65,7 +67,14 @@ TELEGRAM_WEBHOOK_SECRET=...
 PUBLIC_DOMAIN=http://127.0.0.1:8787
 ```
 
-### Prod (секреты Cloudflare)
+Дополнительно в проекте используются служебные значения:
+
+```env
+TELEGRAM_BOT_USERNAME=@zavvetka_bot
+TELEGRAM_BOT_WEB_URL=https://t.me/zavvetka_bot
+```
+
+Для production задайте секреты:
 
 ```bash
 npx wrangler secret put TELEGRAM_BOT_TOKEN
@@ -73,53 +82,38 @@ npx wrangler secret put TELEGRAM_WEBHOOK_SECRET
 npx wrangler secret put PUBLIC_DOMAIN
 ```
 
-`PUBLIC_DOMAIN` должен быть прод-доменом, например `https://zavvetka.ru`.
-
-## 6. Запуск в dev режиме
-
-`wrangler dev` запускает локальную среду Workers на базе Miniflare (локальный режим по умолчанию).
-
-### Локальный режим (Miniflare)
+### 3.5 Локальный запуск и проверка
 
 ```bash
 npm run dev
 ```
 
-Worker будет доступен обычно по адресу:
+Дополнительные режимы:
 
-```text
-http://127.0.0.1:8787
+```bash
+npm run dev:local
+npm run dev:remote
 ```
 
-Проверка:
+Проверка health endpoint:
 
 ```bash
 curl http://127.0.0.1:8787/health
 ```
 
-Альтернативная явная команда:
+PowerShell-альтернатива:
 
-```bash
-npm run dev:local
+```powershell
+Invoke-WebRequest http://127.0.0.1:8787/health
 ```
 
-### Удаленный режим (для проверки в реальной edge-среде Cloudflare)
-
-```bash
-npm run dev:remote
-```
-
-## 7. Публикация в Cloudflare Workers
+### 3.6 Деплой
 
 ```bash
 npm run deploy
 ```
 
-После деплоя получите URL worker или подключите кастомный домен через Cloudflare dashboard.
-
-## 8. Настройка Telegram webhook
-
-После деплоя установите webhook:
+### 3.7 Настройка Telegram webhook
 
 ```bash
 curl -X POST "https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook" \
@@ -127,24 +121,102 @@ curl -X POST "https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook" \
   -d "secret_token=<TELEGRAM_WEBHOOK_SECRET>"
 ```
 
-Проверка webhook:
+Проверка:
 
 ```bash
 curl "https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/getWebhookInfo"
 ```
 
-## 9. Минимальный чек-лист проверки
+### 3.8 Минимальный smoke test
 
-1. Открыть бота, отправить `/start`.
+1. Отправить `/start` боту.
 2. Нажать `Создать заметку`.
-3. Проверить, что пришла ссылка формата `/uuid#md5`.
-4. Открыть ссылку, ввести текст.
-5. Подождать 30+ секунд после ввода, проверить статус сохранения.
-6. Проверить таймер автоудаления.
-7. Проверить уведомление об открытии заметки в Telegram.
+3. Проверить формат ссылки `/uuid#md5`.
+4. Открыть заметку, изменить текст, дождаться автосохранения (30+ секунд).
+5. Проверить смену режима автоудаления и уведомление об открытии в Telegram.
 
-## 10. Важные замечания
+## 4. Лендинг (`landing-pages/`)
 
-- Ключ шифрования хранится только в URL hash и не передается на сервер.
-- Потеря hash-ключа означает невозможность расшифровать заметку.
-- Любой, у кого есть ссылка целиком (`uuid + hash`), получит доступ к заметке.
+### 4.1 Локальный запуск
+
+```bash
+cd landing-pages
+npm install
+npm run dev
+```
+
+### 4.2 Сборка и проверка production
+
+```bash
+npm run build
+npm run preview
+```
+
+### 4.3 Деплой в Cloudflare Pages
+
+```bash
+npm run deploy
+```
+
+Эквивалент ручной команды:
+
+```bash
+npx wrangler pages deploy dist --project-name zavvetka-landing
+```
+
+Рекомендуемые настройки проекта в Cloudflare Pages:
+
+- Root directory: `landing-pages`
+- Build command: `npm run build`
+- Build output directory: `dist`
+
+## 5. Donations Worker (`donations-worker/`)
+
+### 5.1 Локальный запуск
+
+```bash
+cd donations-worker
+npm install
+npm run dev
+```
+
+### 5.2 Деплой
+
+Интерактивно:
+
+```bash
+npm run deploy
+```
+
+Через PowerShell-скрипт (CI/неинтерактивно):
+
+```powershell
+.\deploy.ps1 -CloudflareApiToken "..." -CloudflareAccountId "..."
+```
+
+Или через переменные окружения:
+
+```powershell
+$env:CLOUDFLARE_API_TOKEN="..."
+$env:CLOUDFLARE_ACCOUNT_ID="..."
+.\deploy.ps1
+```
+
+Проверка токена Cloudflare API:
+
+```powershell
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/tokens/verify" -H "Authorization: Bearer <TOKEN>"
+```
+
+Проверка редиректа:
+
+```bash
+curl -I https://<DONATION_DOMAIN>
+```
+
+## 6. Важные замечания
+
+- Ключ шифрования находится только в URL hash и не передается серверу.
+- Потеря hash-ключа делает расшифровку невозможной.
+- Любой, у кого есть полный URL (`uuid + hash`), получит доступ к заметке.
+- В `*.example` и скриптах не храните реальные токены/секреты.

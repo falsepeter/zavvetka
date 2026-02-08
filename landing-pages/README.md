@@ -1,66 +1,64 @@
-# Cайт ZaVVetka.ru
+# Лендинг ZaVVetka (`landing-pages`)
 
-Лендинг на `Preact.js` с UI-компонентами в стиле `shadcn-ui` с прекомпилятором Tailwind и сборкой через Vite.
+Отдельное SPA-приложение для публичной страницы проекта на Cloudflare Pages.
 
 ![Landing screenshot](../assets/readme_landing_2.jpg)
 
-## Ссылки
+## Стек
 
-- Сайт: `https://zavvetka.ru`
-- Telegram bot: `@zavvetka_bot`
-- Ссылка на Telegram bot: `https://t.me/zavvetka_bot`
-- GitHub репозиторий: `https://github.com/falsepeter/zavvetka.git`
-- Написать разработчику: `https://t.me/truepeter`
-
-## Палитра цветов
-
-- Фоновый: `#0D1117`
-- Первичный: `#22D3EE`
-- Вторичный: `#2563EB`
+- `Preact`
+- `Vite`
+- `Tailwind CSS`
+- `lucide-preact`
+- UI-компоненты в стиле shadcn (`src/components/ui`)
 
 ## Структура
 
-- `wrangler.toml` — конфиг файл для Cloudflare Pages.
-- `src/App.tsx` — тексты, блоки, ссылки, CTA.
-- `src/index.css` — базовые стили, шрифты, палитра.
-- `src/components/` - компоненты
-- `public/` — логотипы и favicon.
+- `src/App.tsx` - основной контент страницы, CTA, блок доверия, блок Open Source.
+- `src/index.css` - тема, шрифты, базовые токены и утилиты.
+- `src/components/ui/*` - переиспользуемые UI-компоненты.
+- `src/lib/utils.ts` - утилиты (`cn` и т.п.).
+- `public/` - статические ассеты (лого, favicon, QR).
+- `wrangler.toml` - конфигурация деплоя в Cloudflare Pages.
 
-## Запуск локального режима
+## Команды
 
 ```bash
 cd landing-pages
 npm install
 npm run dev
-```
-
-## Сборка проекта (production build)
-
-```bash
+npm run check
 npm run build
 npm run preview
 ```
 
-## Размещение на Cloudflare Pages
+## Деплой в Cloudflare Pages
 
 ```bash
+cd landing-pages
 npm run deploy
 ```
 
-Или вручную:
+Ручной эквивалент:
 
 ```bash
 npm run build
 npx wrangler pages deploy dist --project-name zavvetka-landing
 ```
 
-### Настройки размещения
+### Рекомендуемые настройки проекта в Cloudflare Pages
 
 - `Root directory`: `landing-pages`
 - `Build command`: `npm run build`
 - `Build output directory`: `dist`
 
-### Переменные окружения
+## Переменные окружения
 
-- Для работы лендинга не требуются.
-- Для деплоя через CI/неинтерактивный режим нужен `CLOUDFLARE_API_TOKEN`.
+- Для runtime лендинга переменные окружения не требуются.
+- Для CI-деплоя нужен `CLOUDFLARE_API_TOKEN`.
+
+## Ссылки проекта
+
+- Сайт: `https://zavvetka.ru`
+- Telegram bot: `@zavvetka_bot` (`https://t.me/zavvetka_bot`)
+- GitHub: `https://github.com/falsepeter/zavvetka.git`
