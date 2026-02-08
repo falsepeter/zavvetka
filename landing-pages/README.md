@@ -2,7 +2,7 @@
 
 Лендинг на `Preact.js` с UI-компонентами в стиле `shadcn-ui` с прекомпилятором Tailwind и сборкой через Vite.
 
-![Landing screenshot](public/landing_screenshot.png)
+![Landing screenshot](../assets/readme_landing_2.jpg)
 
 ## Ссылки
 
